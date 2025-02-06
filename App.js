@@ -15,11 +15,9 @@ export default function App() {
      const file = require('./shake.wav');
      const {sound} = await Audio.Sound.createAsync(file);
      setShake(sound);
-     setText(true);
      sound.setOnPlaybackStatusUpdate((status) => {
-       if (status.didJustFinish) {
-         setText(false);
-       }
+       {status.isPlaying === true ?
+           setText(true) : setText(false)}
      });
      await sound.playAsync();
   }
@@ -28,8 +26,7 @@ export default function App() {
     return shake ? () => {
       console.log('Unloading Sound');
       shake.unloadAsync();
-    }
-    : undefined;
+    } : undefined;
   }, [shake]);
 
   useEffect(() => {
