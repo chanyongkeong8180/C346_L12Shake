@@ -8,6 +8,9 @@ export default function App() {
   const [shake, setShake] = useState();
   const [text, setText] = useState(false);
 
+  let threshold = 2;
+  let acceleration = (x ** 2 + y ** 2 + z ** 2) ** 0.5;
+
   async function playShake() {
      const file = require('./shake.wav');
      const {sound} = await Audio.Sound.createAsync(file);
@@ -30,8 +33,8 @@ export default function App() {
   }, [shake]);
 
   useEffect(() => {
-    {x + y + z > 2 && playShake()}
-  }, [x + y + z]);
+    {acceleration > threshold && playShake()}
+  }, [acceleration]);
 
   useEffect(() => {
     Accelerometer.setUpdateInterval(100);
@@ -40,7 +43,9 @@ export default function App() {
       subscription.remove();
   }, []);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,
+                  {backgroundColor: text === true ?
+                  "lime" : "pink"}]}>
       <Text style={styles.text}>{text === true && "SHAKE"}</Text>
     </View>
   );
