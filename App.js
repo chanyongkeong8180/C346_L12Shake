@@ -45,7 +45,7 @@ export default function App() {
   return (
     <View style={[styles.container,
                   {backgroundColor: text === true ?
-                  "lime" : "pink"}]}>
+                  "red" : "lime"}]}>
       <Text style={styles.text}>{text === true && "SHAKE"}</Text>
     </View>
   );
